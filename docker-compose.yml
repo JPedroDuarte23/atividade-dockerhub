@@ -1,0 +1,32 @@
+services:
+  loadbalancer:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - rede-compose
+    depends_on:
+      - site1
+      - site2
+      - site3
+
+  site1:
+    image: /front:vermelho
+    networks:
+      - rede-compose
+
+  site2:
+    image: /front:azul
+    networks:
+      - rede-compose
+
+  site3:
+    image: /front:amarelo
+    networks:
+      - rede-compose
+
+networks:
+  rede-compose:
+    driver: bridge
